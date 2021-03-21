@@ -40,8 +40,9 @@ def checkout():
 def confirm():
     return render_template('confirm.html')
 
-@app.route('/confirm/rounded')
-def confirm_donation():
+@app.route('/confirm/rounded/<donation_value>')
+def confirm_donation(donation_value):
+    print('donation value is: ', donation_value)
     # implement LinkAPI logic
     return render_template('confirm-rounded.html')
 

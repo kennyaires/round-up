@@ -1,1 +1,159 @@
-<h1>página de Checkout</h1>
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js" data-auto-a11y="true"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <i class="fab fa-pied-piper-alt"></i>
+        SEU CARRINHO
+        <i class="fas fa-shopping-cart"></i>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h3 class="title">Lista de produtos</h3>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Valor Unitário</th>
+                        <th scope="col">Valor total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in products %}
+                    <tr>
+                        <th scope="row">{{p.name}}</th>
+                        <td>{{p.quantity}}</td>
+                        <td>{{p.price}}</td>
+                        <td>{{p.total}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>{{total_amount}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="form-check round-up-check">
+                <input class="form-check-input" type="checkbox" value="" id="round-up">
+                <label class="form-check-label" for="flexCheckChecked">
+                    Quero arredonar minha compra para ajudar a ONG XPTO
+                </label>
+            </div>
+            <div id="round-up-offer">
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Quantidade</th>
+                            <th scope="col">Valor Unitário</th>
+                            <th scope="col">Valor total</th>
+                        </tr>
+                    </thead>
+                   
+                    <tbody>
+ 
+                        <tr>
+                            <th scope="row">Doação</th>
+                            <td>1</td>
+                            <td>{{round_up_donation}}</td>
+                            <td>{{round_up_donation}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Total com doação</th>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{total_amount + round_up_donation}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          
+            <div>
+                <a id="confirm-button" href="{{url_for('confirm')}}"><button type="button"  class="btn btn-primary btn-block">Confirmar compra </button></a>  </div>
+
+        </div>
+    </main>
+</body>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Courier New', Courier, monospace;
+
+    }
+
+    body {
+        background-color: rgba(218, 122, 186, 0.274);
+    }
+
+    .checkout-main {
+        display: flex;
+    }
+
+    .container {
+        margin: 0 auto;
+        max-width: 80%;
+        background-color: rgb(189, 181, 186);
+        
+        min-height: 92%;
+    }
+
+    .navbar {
+        height: 8%;
+        background-color: rgb(213, 228, 78);
+    }
+
+    .navbar svg {
+        background-color: rgb(213, 228, 78);
+    }
+
+    .round-up-check {
+        text-align: end;
+        margin-bottom: 10px;
+    }
+
+    #round-up-offer {
+        display: none;
+    }
+    .title {
+        text-align: center;
+        padding-top: 10px;
+    }
+
+
+</style>
+
+<script>
+    let round_up_checkbox = document.getElementById('round-up')
+    let round_up_offer = document.getElementById('round-up-offer')
+    let confirm_button = document.getElementById('confirm-button')
+    
+    round_up_checkbox.addEventListener('click', () => {
+        console.log()
+        round_up_checkbox.checked ? round_up_offer.style.display = 'block' : round_up_offer.style.display = 'none'
+        round_up_checkbox.checked ? confirm_button.href = confirm_button.href+'/rounded' :  confirm_button.href = confirm_button.href.replace('/rounded', '')
+
+    })
+</script>

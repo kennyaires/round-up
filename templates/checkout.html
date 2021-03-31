@@ -149,12 +149,10 @@
     let round_up_checkbox = document.getElementById('round-up')
     let round_up_offer = document.getElementById('round-up-offer')
     let confirm_button = document.getElementById('confirm-button')
-    confirm_button.href = '{{url_for("confirm")}}'
     
     round_up_checkbox.addEventListener('click', () => {
-        console.log()
+        confirm_button.href = '{{url_for("confirm")}}'
         round_up_checkbox.checked ? round_up_offer.style.display = 'block' : round_up_offer.style.display = 'none'
-        round_up_checkbox.checked ? confirm_button.href = confirm_button.href+'/rounded/{{round_up_donation}}' :  confirm_button.href = confirm_button.href.replace('/rounded', '')
-
+        round_up_checkbox.checked ? confirm_button.href = confirm_button.href+'/rounded/{{round_up_donation}}' :  confirm_button.href = confirm_button.href.replace('/rounded/{{round_up_donation}}', '')
     })
 </script>
